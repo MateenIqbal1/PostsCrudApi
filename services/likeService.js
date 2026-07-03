@@ -38,6 +38,24 @@ const toggleLike = async (postId, userId) => {
   };
 };
 
+const getLikes = async (postId) => {
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+        throw new ApiError(404, "Post not found");
+    }
+
+    const likes = await Like.find({ postId })
+        .populate("userId", "name")
+        .sort({ createdAt: -1 });
+
+    return {
+        count: likes.length,
+        likes,
+    };
+};
 module.exports = {
   toggleLike,
+  getLikes,
 };

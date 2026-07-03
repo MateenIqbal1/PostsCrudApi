@@ -11,6 +11,5 @@ class ApiError extends Error {
     }
 }
 
-console.log("Exporting:", ApiError);
 
 module.exports = ApiError;

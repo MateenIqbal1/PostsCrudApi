@@ -1,10 +1,11 @@
+const { get } = require("../routes/likeRoutes");
 const likeService = require("../services/likeService");
 
-const createLike = async (req, res, next) => {
+const toggleLike = async (req, res, next) => {
   try {
-    const result = await likeService.createLike(
+    const result = await likeService.toggleLike(
       req.params.postId,
-      req.user.id
+      req.user.userId
     );
 
     res.status(200).json(result);
@@ -13,6 +14,19 @@ const createLike = async (req, res, next) => {
   }
 };
 
+const getLikes = async (req, res, next) => {
+    try {
+        const result = await likeService.getLikes(req.params.postId);
+
+        res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 module.exports = {
-  createLike,
+  toggleLike,
+  getLikes
 };
